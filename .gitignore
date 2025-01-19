@@ -1,0 +1,13 @@
+.venv/**/**
+data/**/**
+.DS_Store
+logs/response.json
+response-*.json
+logs/airbyte_test.log
+schemas/
+.idea/**/**
+*-progress.json
+comments/**/**
+logs/**/**
+**/**/__pycache__/**/**
+.env
