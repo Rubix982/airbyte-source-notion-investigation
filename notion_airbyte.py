@@ -70,7 +70,6 @@ def log_time_error(message: str):
 cert_path: str = os.getenv('CERT_PATH', '')
 if cert_path != '':
     log_time_debug(f"Setting SSL_CERT_FILE to {cert_path}")
-    cert_path: str = "/Users/saif.islam/Downloads/Zscaler_Root_Certificate_2048_SHA256.pem"
     os.environ["SSL_CERT_FILE"] = cert_path
     os.environ["REQUESTS_CA_BUNDLE"] = cert_path
     certifi.where = lambda: cert_path
