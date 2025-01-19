@@ -10,6 +10,7 @@ from dataclasses import asdict
 from enum import Enum
 from pathlib import Path
 from typing import Union, Any, List
+from dotenv import load_dotenv
 
 import certifi
 import requests
@@ -22,6 +23,9 @@ from airbyte_cdk.models import (
     SyncMode,
     Type as MessageType,
 )
+
+# Load environment variables from the .env file
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(
@@ -62,11 +66,14 @@ def log_time_error(message: str):
     logger.error(f"{message}")
 
 
-# Set certificate paths
-cert_path: str = "/Users/saif.islam/Downloads/Zscaler_Root_Certificate_2048_SHA256.pem"
-os.environ["SSL_CERT_FILE"] = cert_path
-os.environ["REQUESTS_CA_BUNDLE"] = cert_path
-certifi.where = lambda: cert_path
+# Set certificate paths if needed for your environment
+cert_path: str = os.getenv('CERT_PATH', '')
+if cert_path != '':
+    log_time_debug(f"Setting SSL_CERT_FILE to {cert_path}")
+    cert_path: str = "/Users/saif.islam/Downloads/Zscaler_Root_Certificate_2048_SHA256.pem"
+    os.environ["SSL_CERT_FILE"] = cert_path
+    os.environ["REQUESTS_CA_BUNDLE"] = cert_path
+    certifi.where = lambda: cert_path
 
 # Global variable to track the last processed index
 last_processed_index = 0
@@ -469,9 +476,9 @@ def persist_comment_with_block_id_with_env_vars():
 
 
 def main():
-    get_access_token()
-    persist_comment_with_block_id_with_env_vars()
-    persist_block_with_page_id()
+    # get_access_token()
+    # persist_comment_with_block_id_with_env_vars()
+    # persist_block_with_page_id()
     sync_notion_entities()
 
 
